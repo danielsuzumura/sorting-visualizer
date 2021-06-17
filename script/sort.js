@@ -74,3 +74,49 @@ async function mergesortRec(array,start,end){
 export async function mergesort(array){
     mergesortRec(array,0,array.length-1);
 }
+
+async function partition(array,left,right){
+    let pivot = array[parseInt((right+left)/2)];
+    pivot.style.backgroundColor = "red";
+    while(left <= right){
+        while(await compare(array[left], pivot,true,false) === false && array[left] !== pivot){
+            left++;
+        }
+        while(await compare(array[right], pivot,true,false) === true){
+            right--;
+        }
+        if(left <= right){
+            if(array[left] === pivot){
+                pivot.style.backgroundColor = "blue";
+                pivot = array[right];
+                pivot.style.backgroundColor = "red";
+            }
+            else if(array[right] === pivot){
+                pivot.style.backgroundColor = "blue";
+                pivot = array[left];
+                pivot.style.backgroundColor = "red";
+            }
+            swap(array[left],array[right]);
+            left++;
+            right--;
+        }
+    }
+    pivot.style.backgroundColor = "blue";
+    return left;
+}
+
+async function quicksortRec(array,left,right){
+    let index = await partition(array,left,right);
+    if(left<index-1){
+        await quicksortRec(array,left,index-1);
+    }
+    if(right>index){
+        await quicksortRec(array,index, right);
+    }
+}
+
+export async function quicksort(array){
+    quicksortRec(array,0,array.length-1);
+}
+
+export async function heapsort(array){}

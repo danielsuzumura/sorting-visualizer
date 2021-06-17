@@ -1,14 +1,34 @@
-/*jslint
-    es6,for,devel,browser
-*/
+/**
+ * @jest-environment jsdom
+ */
 
-import {bubblesort} from "./sort.js";
-import { swap } from "./util.js";
-import {createArray} from "./util.js";
-import {n} from "./const.js";
+import * as sorts from "./sort.js";
+
+function createTestArray(n,array) {
+    "use strict";
+    let i;
+    if(array == null){
+        array = [];
+        for (i = 0; i < n; i += 1) {
+            array.push((Math.random() * 100) + 1);
+        }
+    }
+    const sizes = [];
+    for (i = 0; i < n; i += 1) {
+        let height = array[i];
+        let bar = document.createElement("div");
+        bar.style.height = height + "px";
+        bar.style.width = 100 + "px";
+        bar.classList.add("bar");
+        sizes.push(bar);
+    }
+    return sizes;
+}
 
 test('sort array', () => {
-    let sizes = createArray(2);
-    // expect(swap(sizes[0],sizes[1])).toStrictEqual()
+    let sizes = createTestArray(30);
+    sorts.quicksort(sizes);
+    let numbers = sizes.map(div => div.style.height);
+    console.log(numbers);
     // expect(bubblesort(sizes)).toStrictEqual(sizes.sort());
 });
