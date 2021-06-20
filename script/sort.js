@@ -2,7 +2,22 @@
     es6,for,devel,browser
 */
 
-import { swap,compare,wait } from "./util.js";
+import { swap,compare,wait, swapDisplayValue } from "./util.js";
+
+export let sortFunction = {
+    bubblesort: array => {
+        bubblesort(array);
+    },
+    insertionsort: array => {
+        insertionsort(array);
+    },
+    mergesort: array => {
+        mergesort(array);
+    },
+    quicksort: array => {
+        quicksort(array);
+    }
+}
 
 export async function bubblesort(array) {
     "use strict";
@@ -15,7 +30,6 @@ export async function bubblesort(array) {
             if (await compare(array[i], array[i + 1]) === true) {
                 swap(array[i], array[i + 1]);
                 isSorted = false;
-                // await wait(50);
             }
         }
         n -= 1;
@@ -57,6 +71,7 @@ async function merge(array, start, mid, end){
     }
     for(i = start, j = 0; i <= end; i += 1, j += 1){
         array[i].style.height = temp[j]+"px";
+        swapDisplayValue(array[i],temp[j]);
         await wait(20);
     }
 }
