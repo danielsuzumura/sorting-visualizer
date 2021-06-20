@@ -10,19 +10,42 @@
         <div id="header">
             <!-- insert array
             <input type="text" name="inputArray"> -->
-            <select id="sortName">
-                <option value = "bubblesort">Bubblesort</option>
-                <option value = "insertionsort">Insertion sort</option>
-                <option value = "heapsort">Heap sort</option>
-                <option value = "quicksort">Quicksort</option>
-                <option value = "mergesort">Mergesort</option>
-            </select>
-            <button id="generateArray">Generate array</button>
-            <button id="btn-sort">Sort</button>
+            <ul id="header-list">
+                <li >
+                    <select id="sortName">
+                        <option value = "bubblesort">Bubblesort</option>
+                        <option value = "insertionsort">Insertion sort</option>
+                        <option value = "heapsort" disabled=true>Heap sort</option>
+                        <option value = "quicksort">Quicksort</option>
+                        <option value = "mergesort">Mergesort</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="number" id="input-size" min="1" max="100" placeholder="size(optional)">
+                </li>
+                <li>
+                    <input type="text" id="input-array" placeholder="insert array(optional)">
+                </li>
+                <li class="li-button">
+                    <button id="btn_array">Generate array</button>
+                </li>
+                <li class="li-button">
+                    <button id="btn_sort">Sort</button>
+                </li>
+                <li class="li-button">
+                    <button id="btn_restoreArray">restore array</button>
+                </li>
+                <li>
+                    <span id="speed">Speed:</span><input type="range" id="slider_speed" min="1" max="100" value="50">
+                </li>    
+            </ul>
         </div>
-        <div id="box">
-
-        </div>
+        <table>
+            <tr id="row-plot">
+                <td id="col-plot"><div id="box"></div></td>
+            </tr>
+            <tr id = "table-value"></tr>
+        </table>
         <script type="module" src="./script/script.js"></script>
     </body>
 </html>
