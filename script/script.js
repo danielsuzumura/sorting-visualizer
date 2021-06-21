@@ -6,7 +6,7 @@
 import * as dom from "./domChanges.js";
 import { copyArrayHeight } from "./util.js";
 
-export const DEFAULT_SIZE = 30;
+export const DEFAULT_SIZE = 20;
 export const box = document.getElementById("box");
 let MAX_WIDTH;
 let MAX_HEIGHT;
