@@ -71,13 +71,11 @@ table{
 #table-value > td{
     width: var(--number-size);
 }
-
 .bar{
     box-sizing: border-box;
     background-color: blue;
     border: 1px solid rgb(0, 0, 48);
     text-align: center;
-    /* margin:1px; */
 }
 #input-size{
     width: 100px;

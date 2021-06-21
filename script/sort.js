@@ -4,6 +4,9 @@
 
 import { swap,compare,wait, swapDisplayValue } from "./util.js";
 
+/**
+ * Stores all sort functions
+ */
 export let sortFunction = {
     bubblesort: array => {
         bubblesort(array);
@@ -16,10 +19,17 @@ export let sortFunction = {
     },
     quicksort: array => {
         quicksort(array);
+    },
+    heapsort: array => {
+        heapsort(array);
     }
 }
 
-export async function bubblesort(array) {
+/**
+ * Sort array using bubblesort method
+ * @param {Array} array Div elements to be sorted by height
+ */
+async function bubblesort(array) {
     "use strict";
     let n = array.length;
     let isSorted = false;
@@ -36,7 +46,11 @@ export async function bubblesort(array) {
     }
 }
 
-export async function insertionsort(array){
+/**
+ * Sort array using insertion sort method
+ * @param {Array} array Div elements to be sorted by height
+ */
+async function insertionsort(array){
     "use strict";
     let n = array.length;
     let i;
@@ -49,6 +63,14 @@ export async function insertionsort(array){
     }
 }
 
+/**
+ * Mergesort function
+ * Merge array[start,mid] with array[m+1,end]
+ * @param {Array} array Array
+ * @param {Number} start Start index
+ * @param {Number} mid Mid index
+ * @param {Number} end End index
+ */
 async function merge(array, start, mid, end){
     let temp = [];
     let i = start, j = mid+1;
@@ -76,6 +98,12 @@ async function merge(array, start, mid, end){
     }
 }
 
+/**
+ * Mergesort function
+ * @param {Array} array Div elements to be sorted by height
+ * @param {Number} start Start index
+ * @param {Number} end End index(inclusive)
+ */
 async function mergesortRec(array,start,end){
     if(start >= end){
         return;
@@ -86,11 +114,23 @@ async function mergesortRec(array,start,end){
     await merge(array,start, mid, end);
 }
 
-export async function mergesort(array){
+/**
+ * Sort array using mergesort method
+ * @param {Array} array Div elements to be sorted by height
+ */
+async function mergesort(array){
     mergesortRec(array,0,array.length-1);
 }
 
+/**
+ * Quicksort function
+ * Creates partition
+ * @param {Array} array Div elements to be sorted by height
+ * @param {Number} left Start index
+ * @param {Number} right End index
+ */
 async function partition(array,left,right){
+    /** PIVOT is the middle element*/
     let pivot = array[parseInt((right+left)/2)];
     pivot.style.backgroundColor = "red";
     while(left <= right){
@@ -101,6 +141,7 @@ async function partition(array,left,right){
             right--;
         }
         if(left <= right){
+            /** If the pivot will be swapped, adjust pivot pointer*/
             if(array[left] === pivot){
                 pivot.style.backgroundColor = "blue";
                 pivot = array[right];
@@ -120,6 +161,12 @@ async function partition(array,left,right){
     return left;
 }
 
+/**
+ * Quicksort function
+ * @param {Array} array Div elements to be sorted by height
+ * @param {Number} left Start index
+ * @param {Number} right End index(inclusive)
+ */
 async function quicksortRec(array,left,right){
     let index = await partition(array,left,right);
     if(left<index-1){
@@ -130,8 +177,52 @@ async function quicksortRec(array,left,right){
     }
 }
 
-export async function quicksort(array){
+/**
+ * Sort array using quicksort method
+ * @param {Array} array Div elements to be sorted by height
+ */
+async function quicksort(array){
     quicksortRec(array,0,array.length-1);
 }
 
-export async function heapsort(array){}
+/**
+ * Create max-heap in subtree with root of index {i}
+ * @param {Array} array Tree
+ * @param {Number} i Parent index
+ * @param {Number} n Array size
+ */
+async function heapify(array,i,n){
+    let largestIndex = i;
+    let leftChildIndex = i * 2 + 1;
+    let rightChildIndex = i * 2 + 2;
+    if(leftChildIndex < n && await compare(array[leftChildIndex], array[largestIndex])){
+        // left child is bigger than parent
+        largestIndex = leftChildIndex;
+    }
+    if(rightChildIndex < n && await compare(array[rightChildIndex], array[largestIndex])){
+        // right child is the biggest of them
+        largestIndex = rightChildIndex;
+    }
+    if(largestIndex != i){
+        swap(array[largestIndex],array[i]);
+        await heapify(array, largestIndex, n);
+    }
+}
+
+/**
+ * Sort array using heapsort method
+ * @param {Array} array Div elements to be sorted by height
+ */
+async function heapsort(array){
+    let middle = parseInt(array.length/2) - 1;
+    let i;
+    let n = array.length;
+    for(i = middle; i >=0; i -= 1){
+        await heapify(array,i,n);
+    }
+    for(i = array.length - 1; i >= 0; i -= 1){
+        swap(array[i],array[0]);
+        n -= 1;
+        await heapify(array,0,n);
+    }
+}
